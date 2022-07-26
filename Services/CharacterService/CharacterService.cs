@@ -24,7 +24,9 @@ namespace dotnet_rpg2.Services.CharacterService
         public async Task<ServiceResponse<List<GetCharacterDto>>> AddCharacter(AddCharacterDto newCharacter)
         {
             var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
-            characters.Add(_mapper.Map<Character>(newCharacter));
+            Character character = _mapper.Map<Character>(newCharacter);
+            character.Id = characters.Max(c => c.Id) + 1;
+            characters.Add(character);
             serviceResponse.Data = characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
             return serviceResponse;
         }
@@ -43,6 +45,30 @@ namespace dotnet_rpg2.Services.CharacterService
             var character = characters.FirstOrDefault(c => c.Id == id);
             serviceResponse.Data = _mapper.Map<GetCharacterDto>(character);
             return serviceResponse;
+        }
+
+        public async Task<ServiceResponse<GetCharacterDto>> UpdateCharacter(UpdateCharacterDto updated)
+        {
+            ServiceResponse<GetCharacterDto> response = new ServiceResponse<GetCharacterDto>();
+
+            try{
+            Character character = characters.FirstOrDefault(c => c.Id == updated.Id);
+
+            character.Name = updated.Name;
+            character.HitPoints = updated.HitPoints;
+            character.Strength = updated.Strength;
+            character.Defence = updated.Defence;
+            character.Intelligence = updated.Intelligence;
+            character.Class = updated.Class ;
+
+            response.Data = _mapper.Map<GetCharacterDto>(character);
+            } 
+            catch(Exception ex)
+            {
+            response.Success = false;
+            response.Message = ex.Message;
+            }
+            return response;
         }
     }
 }
