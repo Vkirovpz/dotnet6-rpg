@@ -11,11 +11,11 @@ namespace dotnet_rpg2.Services.CharacterService
 {
     public class CharacterService : ICharacterService
     {
-        // private static List<Character> characters = new List<Character>
-        // {
-        //     new Character(),
-        //     new Character { Id = 1, Name = "Sam" }
-        // };
+        private static List<Character> characters = new List<Character>
+        {
+             new Character(),
+             new Character { Id = 1, Name = "Sam" }
+         };
         private readonly IMapper _mapper;
         private readonly DataContext _context;
 
@@ -63,10 +63,10 @@ namespace dotnet_rpg2.Services.CharacterService
 
         public async Task<ServiceResponse<GetCharacterDto>> GetCharacterById(int id)
         {
-            var serviceResponse = new ServiceResponse<GetCharacterDto>();
-            var character = characters.FirstOrDefault(c => c.Id == id);
-            serviceResponse.Data = _mapper.Map<GetCharacterDto>(character);
-            return serviceResponse;
+            var response = new ServiceResponse<GetCharacterDto>();
+            var dbcharacter = await _context.Characters.FirstOrDefaultAsync(c => c.Id == id);
+            response.Data = _mapper.Map<GetCharacterDto>(dbcharacter);
+            return response;
         }
 
         public async Task<ServiceResponse<GetCharacterDto>> UpdateCharacter(UpdateCharacterDto updated)
