@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using dotnet_rpg2.Dtos.Character;
+using dotnet_rpg2.Dtos.Skill;
 using dotnet_rpg2.Dtos.Weapon;
 
 namespace dotnet_rpg2
@@ -16,6 +17,7 @@ namespace dotnet_rpg2
             CreateMap<AddCharacterDto, Character>();
             CreateMap<UpdateCharacterDto, Character>();
             CreateMap<Weapon, GetWeaponDto>();
+            CreateMap<Skill, GetSkillDto>();
         }
     }
 }
