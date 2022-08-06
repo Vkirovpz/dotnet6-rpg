@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace dotnet_rpg2.Models
+namespace dotnet_rpg2.Dtos.Weapon
 {
-    public class Weapon
+    public class AddWeaponDto
     {
-        public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public int Damage { get; set; }
         public int CharacterId { get; set; }
-        public Character Character { get; set; }
     }
 }
